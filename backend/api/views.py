@@ -47,3 +47,11 @@ class ImageViewSet(viewsets.ModelViewSet):
             except ValueError:
                 return self.queryset.none()
         return self.queryset
+
+    def get_serializer_context(self):
+        """
+        Ensure request is passed to serializer for file URLs.
+        """
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
